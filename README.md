@@ -56,13 +56,13 @@ bash install.sh
 
 ## Why this exists
 
-Some agent platforms recently announced model-specific prompt profiles. Good idea. They chose to write them by hand—one engineer per model, forever.
+Some agent platforms recently announced model-specific prompt profiles. Good idea. They chose to write them by hand—teams of people, one model at a time, indefinitely.
 
-We don't have those engineers. Neither do you.
+We don't have a team. Neither do you.
 
 So we built something that figures the model out on its own. It gets better the more you use it. The tenth conversation should feel tighter than the first.
 
-Hand-written profiles are a privilege. Automatic ones are a choice.
+Hand-crafted profiles are a privilege of scale. This one was carved out by a single mind, thinking deeply about the problem for weeks.
 
 ---
 
@@ -70,7 +70,7 @@ Hand-written profiles are a privilege. Automatic ones are a choice.
 
 | | The expensive way | The AgentSync way |
 |:--|:------------------|:------------------|
-| Who writes the profiles? | Engineers, full-time | Nobody. It probes. |
+| Who writes the profiles? | Teams of people, indefinitely | A thinker. Once. Then it learns. |
 | How many models? | 3–5, hand-picked | Any model with an API |
 | Does it learn? | No. Static. | Yes. Every session. |
 | Framework lock-in? | Yes. Profiles only work there. | No. One bash line hooks it. |
