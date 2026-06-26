@@ -1,0 +1,88 @@
+# AgentSync · 模型画像模板
+
+> 为每个模型生成一份"使用说明书"。不是评测，是画像。
+
+---
+
+## 引擎盖
+
+```yaml
+model_id: ""           # 如 "deepseek-v4-pro"
+provider: ""           # 如 "deepseek"
+model_family: ""       # 如 "deepseek-v4"
+probe_date: ""         # 探测日期
+probe_version: "1.0"   # 探测模板版本
+last_updated: ""       # 最后更新日期
+```
+
+---
+
+## 能力指纹（0-1）
+
+```yaml
+capabilities:
+  instruction_adherence: 0.0   # 探测1
+  conciseness: 0.0             # 探测2
+  reasoning_depth: 0.0         # 探测3
+  structure_preference: 0.0    # 探测4
+  self_correction: 0.0         # 探测5
+  tool_usage: 0.0              # 探测6
+  chinese_quality: 0.0         # 探测7
+  composite_score: 0.0         # 加权总分
+  adaptation_level: ""         # "standard" / "enhanced" / "strict" / "not_recommended"
+```
+
+---
+
+## 适配指令
+
+```yaml
+adaptations:
+  # 提示词怎么调
+  prompt:
+    add_constraint_prefix: ""   # 加在提示词前面的约束
+    add_constraint_suffix: ""   # 加在提示词末尾的约束
+    style: ""                   # "verbose_detail" / "concise_direct" / "step_by_step"
+    
+  # 工具描述怎么调  
+  tools:
+    description_style: ""       # "minimal" / "with_examples" / "detailed"
+    rename_mappings: {}         # 工具名映射 {"old": "new"}
+    add_usage_hints: ""         # 额外的工具使用提示
+    
+  # 交互策略怎么调
+  strategy:
+    verification_rounds: 1      # 建议验证轮数
+    need_explicit_chain: false  # 是否需要显式要求链式推理
+    need_parallel_hint: false   # 是否需要提示并行
+    preferred_output_format: "" # "markdown" / "plain" / "structured"
+    
+  # 已知的坑
+  gotchas:
+    - ""
+```
+
+---
+
+## 实战记录
+
+```yaml
+sessions:
+  -
+    date: ""
+    task_type: ""       # "reasoning" / "tool_use" / "chat" / "code"
+    what_worked: ""
+    what_failed: ""
+    notes: ""
+    score_adjustment: 0.0  # 本次交互后，对某个能力分的微调
+```
+
+---
+
+## 进化规则
+
+- 每次交互后追加 session 记录
+- 连续3次 `what_failed` 指向同一能力维度 → 该能力分 -0.1
+- 连续3次 `what_worked` 指向同一能力维度 → 该能力分 +0.05
+- 能力分微调上限 ±0.2（防止单次偏差噪音过大）
+- `composite_score` 和 `adaptation_level` 在能力分变化后重新计算
